@@ -1,0 +1,132 @@
+html {
+    margin: -8px;
+    width: 100%;
+}
+
+body {
+    width: 100%;
+}
+
+header {
+    background-color: #030BFA;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    padding-top: 5px;
+}
+
+h1 {
+    text-align: center;
+    color: #030BFA;
+    font-family: lato;
+}
+
+h2 {
+    color:  #030BFA;
+}
+
+.nav-button {
+    background-color: #030BFA;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    width: 150px;
+     border-radius: 15px 15px 0 0;
+}
+
+.nav-button-logo {
+    background-color: #030BFA;
+    border: none;
+    color: white;
+    font-weight: bold;
+    width: 150px;
+    vertical-align: bottom;
+}
+
+.nav-button-login {
+    background-color: #030BFA;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    width: 150px;
+    border-radius: 15px 15px 0 0;
+    float: right;
+}
+
+#current-page {
+    background-color: white;
+    color: black;
+}
+
+.login-button {
+    background-color: #030BFA;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    width: 200px;
+}
+
+#login-prompt, #register-prompt {
+    color: #030BFA;
+    font-size: 25px;
+    font-weight: bold;
+    border: solid 3px #030BFA;
+    border-radius: 10px;
+    display: inline-block;
+    padding: 15px;
+    background-color: white;
+}
+
+.input-field {
+    height: 20px;
+    width: 250px;
+    margin-bottom: 15px;
+}
+
+.centered-content {
+    text-align: center;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+.nav-button-logo:hover {
+    background-color: #030BFA;
+}
+
+#logo-1 {
+    text-align: center;
+    height: 200px;
+    width: 600px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+#logo-3 {
+    height: 30px;
+    width: 80px;
+}
+
+#about-title {
+    height: 80px;
+    width: 400px;
+    margin-bottom: 30px;
+}
+
+hr {
+    background-color: #030BFA;
+    height: 2.5px;
+    width: 1600px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+p {
+    color: #030BFA;
+    font-weight: bold;
+    font-size: 20px;
+}

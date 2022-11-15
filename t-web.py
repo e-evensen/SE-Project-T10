@@ -7,22 +7,26 @@ from database import db
 
 app = Flask(__name__)
 
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
 @app.route('/my-projects')
 def list_projects():
-    return 1
+    return render_template('my-projects.html')
 
-@app.route()
-def view_project():
-    return 1
+#@app.route()
+#def view_project():
+#    return render_template()
 
-@app.route('new-projects')
+@app.route('/new-projects')
 def create_project():
-    return 1
+    return render_template('new-projects.html')
 
-@app.route()
-def edit_project():
-    return 1
+#@app.route()
+#def edit_project():
+#    return render_template()
 
-@app.route()
-def delete_project():
-    return 1
+#@app.route()
+#def delete_project():
+#    return render_template()
