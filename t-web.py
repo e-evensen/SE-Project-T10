@@ -4,6 +4,7 @@ from flask import request
 from flask import redirect
 from flask import url_for
 from database import db
+#from models import Project as Project
 
 app = Flask(__name__)
 
@@ -14,6 +15,12 @@ def index():
 @app.route('/my-projects')
 def list_projects():
     return render_template('my-projects.html')
+
+#@app.route('/my-projects/<project_id>')
+#def get_project(project_id):
+#    chosen_project = db.session.query(Project).filter_by(id=project_id).one()
+#
+#    return render_template('project.html', project=chosen_project)
 
 @app.route('/login')
 def login():
