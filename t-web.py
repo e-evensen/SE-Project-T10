@@ -15,6 +15,10 @@ def index():
 def list_projects():
     return render_template('my-projects.html')
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
 #@app.route()
 #def view_project():
 #    return render_template()
