@@ -41,10 +41,10 @@ def register():
 
 @app.route('/my-projects/<project_id>')
 def view_project(project_id):
-    a_user = db.session.query(User).filter_by(email='admin@gmail.com').one()
+    #a_user = db.session.query(User).filter_by(email='admin@gmail.com').one()
     project = db.session.query(Project).filter_by(id=project_id).one()
 
-    return render_template('project.html', user=a_user, project=project)
+    return render_template('project.html', project=project)
 
 @app.route('/new-projects', methods=['GET', 'POST'])
 def create_project():
