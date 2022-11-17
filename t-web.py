@@ -79,7 +79,7 @@ def edit_project(project_id):
 
     else:
         project = db.session.query(Project).filter_by(id=project_id).one()
-        return render_template('project.html', project=project)
+        return render_template('new-projects.html', project=project)
 
 
 @app.route('/my-projects/delete/<project_id>', methods=['POST'])
