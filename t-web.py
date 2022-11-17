@@ -31,12 +31,6 @@ def list_projects():
 
     return render_template('my-projects.html', user = a_user, projects = projects)
 
-#@app.route('/my-projects/<project_id>')
-#def get_project(project_id):
-#    chosen_project = db.session.query(Project).filter_by(id=project_id).one()
-#
-#    return render_template('project.html', project=chosen_project)
-
 @app.route('/login')
 def login():
     return render_template('login.html')
@@ -45,23 +39,28 @@ def login():
 def register():
     return render_template('register.html')
 
-#@app.route()
-#def view_project():
-#    return render_template()
+@app.route('/my-projects/<project_id>')
+def view_project():
+    a_user = db.session.query(User).filter_by(email='admin@gmail.com').one()
+    project = db.session.query(Project).filter_by(id=project_id).one()
+
+    return render_template('note.html', project=project, user=a_user)
 
 @app.route('/new-projects', methods=['GET', 'POST'])
 def create_project():
     if request.method == 'POST':
-        projName = request.form['projName']
-        projDesc = request.form['projDesc']
-        today = datetime.datetime.now()
+        projName = request.form['project-name']
+        projDesc = request.form['project-desc']
+        today = datetime.now()
         due = today + timedelta(days=7)
         today = today.strftime("%m-%d-%Y")
         due = due.strftime("%m-%d-%Y")
 
         new_project = Project(projName, projDesc, today, due)
+        db.session.add(new_project)
+        db.session.commit()
 
-        return redirect(url_for('my-projects'))
+        return redirect(url_for('list_projects'))
     else:
         return render_template('new-projects.html')
 

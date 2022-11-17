@@ -15,22 +15,21 @@
     </nav>
 </header>
 <body>
-    <!-- <h1>You do not have any current projects, navigate to the CREATE tab to get started.</h1> -->
-    <table>
-        <tr>
-            <th>Project Name</th>
-            <th>Description</th>
-            <th>Date Created</th>
-            <th>Date Due</th>
-        </tr>
-        {% for project in projects %}
-        <tr>
-            <td><a href=" {{url_for('view_project', project_id=project.id) }} ">{{ project.projName }}</a></td>
-            <td>{{ project.projDesc }}</td>
-            <td>{{ project.createDate }}</td>
-            <td>{{ project.dueDate }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <h1>Project Details</h1>
+
+        <table>
+            <tr>
+                <th>Project Name</th>
+                <th>Description</th>
+                <th>Date Created</th>
+                <th>Date Due</th>
+            </tr>
+            <tr>
+                <td>{{ project.projName }}</td>
+                <td>{{ project.projDesc }}</td>
+                <td>{{ project.createDate }}</td>
+                <td>{{ project.dueDate }}</td>
+            </tr>
+        </table>
 </body>
 </html>

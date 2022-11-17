@@ -3,10 +3,10 @@ import datetime
 
 class Project(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
-    projName = db.Column("project-name", db.String(200))
-    projDesc = db.Column("project-desc", db.String(500))
-    createDate = db.Column("date-created", db.String(50))
-    dueDate = db.Column("date-due", db.String(50))
+    projName = db.Column("projName", db.String(200))
+    projDesc = db.Column("projDesc", db.String(500))
+    createDate = db.Column("createDate", db.String(50))
+    dueDate = db.Column("dueDate", db.String(50))
 
     def __init__(self, projName, projDesc, createDate, dueDate):
         self.projName = projName
