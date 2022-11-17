@@ -3,12 +3,17 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import url_for
+from datetime import datetime
+from datetime import timedelta
 from database import db
+from models import Project as Project
+from models import User as User
 #from models import Project as Project
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///t-web_app.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 
 db.init_app(app)
 
@@ -21,7 +26,10 @@ def index():
 
 @app.route('/my-projects')
 def list_projects():
-    return render_template('my-projects.html')
+    a_user =  db.session.query(User).filter_by(email='admin@gmail.com')
+    projects = db.session.query(Project).all()
+
+    return render_template('my-projects.html', user = a_user, projects = projects)
 
 #@app.route('/my-projects/<project_id>')
 #def get_project(project_id):
@@ -41,9 +49,21 @@ def register():
 #def view_project():
 #    return render_template()
 
-@app.route('/new-projects')
+@app.route('/new-projects', methods=['GET', 'POST'])
 def create_project():
-    return render_template('new-projects.html')
+    if request.method == 'POST':
+        projName = request.form['projName']
+        projDesc = request.form['projDesc']
+        today = datetime.datetime.now()
+        due = today + timedelta(days=7)
+        today = today.strftime("%m-%d-%Y")
+        due = due.strftime("%m-%d-%Y")
+
+        new_project = Project(projName, projDesc, today, due)
+
+        return redirect(url_for('my-projects'))
+    else:
+        return render_template('new-projects.html')
 
 #@app.route()
 #def edit_project():
