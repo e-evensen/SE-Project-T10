@@ -40,7 +40,7 @@ def register():
     return render_template('register.html')
 
 @app.route('/my-projects/<project_id>')
-def view_project():
+def view_project(project_id):
     a_user = db.session.query(User).filter_by(email='admin@gmail.com').one()
     project = db.session.query(Project).filter_by(id=project_id).one()
 
@@ -68,6 +68,9 @@ def create_project():
 #def edit_project():
 #    return render_template()
 
-#@app.route()
-#def delete_project():
-#    return render_template()
+@app.route('/my-projects/delete/<project_id>', methods=['POST'])
+def delete_project(project_id):
+    project = db.session.query(Project).filter_by(id=project_id).one()
+    db.session.delete(project)
+    db.session.commit()
+    return redirect(url_for('list_projects'))
