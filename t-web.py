@@ -64,9 +64,23 @@ def create_project():
     else:
         return render_template('new-projects.html')
 
-#@app.route()
-#def edit_project():
-#    return render_template()
+@app.route('/my-projects/edit/<project_id>', methods=['GET', 'POST'])
+def edit_project(project_id):
+    if request.method == 'POST':
+        projName = request.form['project-name']
+        projDesc = request.form['project-desc']
+        project = db.session.query(Project).filter_by(id=project_id).one()
+        project.projName = projName
+        project.projDesc = projDesc
+        db.session.add(project)
+        db.session.commit()
+
+        return redirect(url_for('my-projects'))
+
+    else:
+        project = db.session.query(Project).filter_by(id=project_id).one()
+        return render_template('project.html', project=project)
+
 
 @app.route('/my-projects/delete/<project_id>', methods=['POST'])
 def delete_project(project_id):
