@@ -75,7 +75,7 @@ def edit_project(project_id):
         db.session.add(project)
         db.session.commit()
 
-        return redirect(url_for('my-projects'))
+        return redirect(url_for('list_projects'))
 
     else:
         project = db.session.query(Project).filter_by(id=project_id).one()
