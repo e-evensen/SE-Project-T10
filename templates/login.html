@@ -11,7 +11,11 @@
          <a href="{{ url_for('index') }}"><button class="nav-button-logo" id="current-page-1"><img src="{{ url_for('static', filename='logo3.png') }}" alt="logo3" id="logo-3"></button></a>
          <a href="{{ url_for('list_projects') }}"><button class="nav-button">MY PROJECTS</button></a>
          <a href="{{ url_for('create_project') }}"><button class="nav-button">CREATE</button></a>
-         <a href="{{ url_for('login') }}"><button class="nav-button-login" id="current-page">LOGIN</button></a>
+         {% if user %}
+         <a href="{{ url_for('logout') }}"><button class="nav-button-login">LOGOUT</button></a>
+         {% else %}
+         <a href="{{ url_for('login') }}"><button class="nav-button-login">LOGIN</button></a>
+         {% endif %}
     </nav>
 </header>
 <body>
