@@ -10,6 +10,8 @@ from datetime import timedelta
 from database import db
 from models import Project as Project
 from models import User as User
+import bcrypt
+
 #from models import Project as Project
 
 app = Flask(__name__)
@@ -33,9 +35,30 @@ def list_projects():
 
     return render_template('my-projects.html', user = a_user, projects = projects)
 
-@app.route('/login')
+@app.route('/login', methods=['POST', 'GET'])
 def login():
-    return render_template('login.html')
+    login_form = LoginForm()
+    # validate_on_submit only validates using POST
+    if login_form.validate_on_submit():
+        # we know user exists. We can use one()
+        the_user = db.session.query(User).filter_by(email=request.form['email']).one()
+        # user exists check password entered matches stored password
+        if bcrypt.checkpw(request.form['password'].encode('utf-8'), the_user.password):
+            # password match add user info to session
+            session['user'] = the_user.first_name
+            session['user_id'] = the_user.id
+            # render view
+            return redirect(url_for('get_notes'))
+
+        # password check failed
+        # set error message to alert user
+        login_form.password.errors = ["Incorrect username or password."]
+        return render_template("login.html", form=login_form)
+    else:
+        # form did not validate or GET request
+        return render_template("login.html", form=login_form)
+
+
 
 @app.route('/logout')
 def logout():
