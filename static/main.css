@@ -33,7 +33,7 @@ h2 {
     font-weight: bold;
     padding: 10px;
     width: 150px;
-     border-radius: 15px 15px 0 0;
+    border-radius: 15px 15px 0 0;
 }
 
 .nav-button-logo {
@@ -89,6 +89,7 @@ h2 {
 
 .centered-content {
     text-align: center;
+    float: center;
 }
 
 button:hover {
@@ -129,4 +130,20 @@ p {
     color: #030BFA;
     font-weight: bold;
     font-size: 20px;
+}
+
+.delete-button {
+    background-color: red;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    box-shadow: 5px black;
+}
+.delete-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.edit-button {
+
 }
