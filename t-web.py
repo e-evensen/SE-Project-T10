@@ -6,12 +6,14 @@ from flask import url_for
 from flask import session
 from forms import LoginForm
 from forms import RegisterForm
-
+from forms import CommentForm
 from datetime import datetime
 from datetime import timedelta
 from database import db
 from models import Project as Project
 from models import User as User
+from models import Comment as Comment
+
 import bcrypt
 
 # from models import Project as Project
@@ -89,6 +91,24 @@ def register():
         return redirect(url_for('list_projects'))
 
     return render_template('register.html', form=form)
+
+
+@app.route('/my-projects/<project_id>/comment', methods=['POST'])
+def new_comment(project_id):
+    if session.get('user'):
+        comment_form = CommentForm()
+        # validate_on_submit only validates using POST
+        if comment_form.validate_on_submit():
+            # get comment data
+            comment_text = request.form['comment']
+            new_record = Comment(comment_text, int(project_id), session['user_id'])
+            db.session.add(new_record)
+            db.session.commit()
+
+        return redirect(url_for('list_projects', project_id=project_id))
+
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/my-projects/<project_id>')
