@@ -1,6 +1,5 @@
 from database import db
 import datetime
-import datetime
 
 
 class Comment(db.Model):
@@ -24,6 +23,7 @@ class Project(db.Model):
     createDate = db.Column("createDate", db.String(50))
     dueDate = db.Column("dueDate", db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    comments = db.relationship("Comment", backref="project", cascade="all, delete-orphan", lazy=True)
 
     def __init__(self, projName, projDesc, createDate, dueDate, user_id):
         self.projName = projName
@@ -41,7 +41,7 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
     projects = db.relationship("Project", backref="user", lazy=True)
-    comments = db.relationship("Comment", backref="note", cascade="all, delete-orphan", lazy=True)
+    comments = db.relationship("Comment", backref="user", cascade="all, delete-orphan", lazy=True)
 
     def __init__(self, first_name, last_name, email, password):
         self.first_name = first_name
