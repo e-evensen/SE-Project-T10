@@ -23,13 +23,28 @@
         <img src="{{ url_for('static', filename='logo1.png') }}" alt="logo1" id="logo-1"> <br>
         <span id="login/register-prompts">
             <h1>Login</h1>
-            <form action="#" id="login-prompt">
-                <label>Email:</label><br>
-                <input type="text" placholder="example@email.com" name="email" class="input-field" aria-required="true">
-                <br>
-                <label>Password:</label><br>
-                <input type="password" placholder="Enter Password" name="psw" class="input-field" aria-required="true">
-            </form>
+            <div class="formwrapper">
+                <form method="POST" action="/login" id = "login-prompt">
+                    <div class="form-field">{{ form.email.label }} {{ form.email }}
+                        {% if form.email.errors %}
+                        <ul class="errors">
+                            {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-field">{{ form.password.label }} {{ form.password }}
+                        {% if form.password.errors %}
+                        <ul class="errors">
+                            {% for error in form.password.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    {{ form.submit }}
+                </form>
             <h1>New to T-Web?</h1>
             <a href="./register"><button class="login-button">Register</button></a>
         </span>
