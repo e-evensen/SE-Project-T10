@@ -31,15 +31,18 @@ with app.app_context():
 
 @app.route('/index')
 def index():
+    if session.get('user'):
+        return render_template('index.html', user=session['user'])
     return render_template('index.html')
 
 
 @app.route('/my-projects')
 def list_projects():
-    a_user = db.session.query(User).filter_by(email='admin@gmail.com')
-    projects = db.session.query(Project).all()
-
-    return render_template('my-projects.html', user=a_user, projects=projects)
+    if session.get('user'):
+        projects = db.session.query(Project).filter_by(user_id=session['user_id']).all()
+        return render_template('my-projects.html', user=session['user'], projects=projects)
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -113,52 +116,64 @@ def new_comment(project_id):
 
 @app.route('/my-projects/<project_id>')
 def view_project(project_id):
-    # a_user = db.session.query(User).filter_by(email='admin@gmail.com').one()
-    project = db.session.query(Project).filter_by(id=project_id).one()
-
-    return render_template('project.html', project=project)
+    if session.get('user'):
+        # a_user = db.session.query(User).filter_by(email='admin@gmail.com').one()
+        project = db.session.query(Project).filter_by(id=project_id, user_id=session['user_id']).one()
+        form = CommentForm()
+        return render_template('project.html', project=project, user=session['user'], form=form)
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/new-projects', methods=['GET', 'POST'])
 def create_project():
-    if request.method == 'POST':
-        projName = request.form['project-name']
-        projDesc = request.form['project-desc']
-        today = datetime.now()
-        due = today + timedelta(days=7)
-        today = today.strftime("%m-%d-%Y")
-        due = due.strftime("%m-%d-%Y")
+    if session.get('user'):
+        if request.method == 'POST':
+            projName = request.form['project-name']
+            projDesc = request.form['project-desc']
+            today = datetime.now()
+            due = today + timedelta(days=7)
+            today = today.strftime("%m-%d-%Y")
+            due = due.strftime("%m-%d-%Y")
 
-        new_project = Project(projName, projDesc, today, due)
-        db.session.add(new_project)
-        db.session.commit()
+            new_project = Project(projName, projDesc, today, due, session['user_id'])
+            db.session.add(new_project)
+            db.session.commit()
 
-        return redirect(url_for('list_projects'))
+            return redirect(url_for('list_projects'))
+        else:
+            return render_template('new-projects.html', user=session['user'])
     else:
-        return render_template('new-projects.html')
+        return redirect(url_for('login'))
 
 
 @app.route('/my-projects/edit/<project_id>', methods=['GET', 'POST'])
 def edit_project(project_id):
-    if request.method == 'POST':
-        projName = request.form['project-name']
-        projDesc = request.form['project-desc']
-        project = db.session.query(Project).filter_by(id=project_id).one()
-        project.projName = projName
-        project.projDesc = projDesc
-        db.session.add(project)
-        db.session.commit()
+    if session.get('user'):
+        if request.method == 'POST':
+            projName = request.form['project-name']
+            projDesc = request.form['project-desc']
+            project = db.session.query(Project).filter_by(id=project_id).one()
+            project.projName = projName
+            project.projDesc = projDesc
+            db.session.add(project)
+            db.session.commit()
 
-        return redirect(url_for('list_projects'))
+            return redirect(url_for('list_projects'))
 
+        else:
+            project = db.session.query(Project).filter_by(id=project_id).one()
+            return render_template('new-projects.html', user=session['user'], project=project)
     else:
-        project = db.session.query(Project).filter_by(id=project_id).one()
-        return render_template('new-projects.html', project=project)
+        return redirect(url_for('login'))
 
 
 @app.route('/my-projects/delete/<project_id>', methods=['POST'])
 def delete_project(project_id):
-    project = db.session.query(Project).filter_by(id=project_id).one()
-    db.session.delete(project)
-    db.session.commit()
-    return redirect(url_for('list_projects'))
+    if session.get('user'):
+        project = db.session.query(Project).filter_by(id=project_id).one()
+        db.session.delete(project)
+        db.session.commit()
+        return redirect(url_for('list_projects'))
+    else:
+        return redirect(url_for('login'))
