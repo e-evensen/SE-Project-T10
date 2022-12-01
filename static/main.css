@@ -70,6 +70,14 @@ h2 {
     width: 200px;
 }
 
+input[type=submit] {
+    background-color: #030BFA;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    width: 200px;
+}
 #login-prompt, #register-prompt {
     color: #030BFA;
     font-size: 25px;
@@ -147,3 +155,4 @@ p {
 .edit-button {
 
 }
+
