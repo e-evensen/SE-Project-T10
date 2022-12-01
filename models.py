@@ -8,12 +8,14 @@ class Comment(db.Model):
     content = db.Column(db.VARCHAR, nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    user_name = db.Column("user_name", db.String(100), nullable=False)
 
-    def __init__(self, date_posted, content, project_id, user_id):
+    def __init__(self, date_posted, content, project_id, user_id, user_name):
         self.date_posted = date_posted
         self.content = content
         self.project_id = project_id
         self.user_id = user_id
+        self.user_name = user_name
 
 
 class Project(db.Model):

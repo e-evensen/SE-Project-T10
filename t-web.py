@@ -107,11 +107,11 @@ def new_comment(project_id):
             comment_text = request.form['comment']
             today = datetime.now()
             today = today.strftime("%m-%d-%Y")
-            new_record = Comment(today, comment_text, int(project_id), session['user_id'])
+            new_record = Comment(today, comment_text, int(project_id), session['user_id'], session['user'])
             db.session.add(new_record)
             db.session.commit()
 
-        return redirect(url_for('view_project', project_id=project_id))
+        return redirect(url_for('view_project', project_id=project_id, user=session['user']))
 
     else:
         return redirect(url_for('login'))

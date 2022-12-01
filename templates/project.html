@@ -41,7 +41,7 @@
           <ul>
           {% for comment in project.comments %}
             <li>{{ comment.content }} 
-            posted on {{comment.date_posted}} </li>
+            posted on {{comment.date_posted}} by {{comment.user_name}} </li>
           {% endfor %}
           </ul>
         {% endif %}
