@@ -40,7 +40,8 @@
           <h2>Comments</h2>
           <ul>
           {% for comment in project.comments %}
-            <li>{{ comment.content }}</li>
+            <li>{{ comment.content }} 
+            posted on {{comment.date_posted}} </li>
           {% endfor %}
           </ul>
         {% endif %}

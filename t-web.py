@@ -105,11 +105,13 @@ def new_comment(project_id):
         if comment_form.validate_on_submit():
             # get comment data
             comment_text = request.form['comment']
-            new_record = Comment(comment_text, int(project_id), session['user_id'])
+            today = datetime.now()
+            today = today.strftime("%m-%d-%Y")
+            new_record = Comment(today, comment_text, int(project_id), session['user_id'])
             db.session.add(new_record)
             db.session.commit()
 
-        return redirect(url_for('list_projects', project_id=project_id))
+        return redirect(url_for('view_project', project_id=project_id))
 
     else:
         return redirect(url_for('login'))
@@ -178,3 +180,8 @@ def delete_project(project_id):
         return redirect(url_for('list_projects'))
     else:
         return redirect(url_for('login'))
+
+@app.route('/my-projects/share/<project_id>', methods=['POST'])
+def share_project(project_id):
+    return redirect(url_for('index'))
+

@@ -4,13 +4,13 @@ import datetime
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date_posted = db.Column(db.DateTime, nullable=False)
+    date_posted = db.Column("date_posted", db.String(50), nullable=False)
     content = db.Column(db.VARCHAR, nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
-    def __init__(self, content, project_id, user_id):
-        self.date_posted = datetime.date.today()
+    def __init__(self, date_posted, content, project_id, user_id):
+        self.date_posted = date_posted
         self.content = content
         self.project_id = project_id
         self.user_id = user_id
