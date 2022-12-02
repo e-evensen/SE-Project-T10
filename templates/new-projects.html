@@ -13,6 +13,7 @@
          <a href="{{ url_for('create_project') }}"><button class="nav-button" id="current-page">CREATE</button></a>
          {% if user %}
          <a href="{{ url_for('logout') }}"><button class="nav-button-login">LOGOUT</button></a>
+         <a href="{{ url_for('profile') }}"><button class="nav-button-login">PROFILE</button></a>
          {% else %}
          <a href="{{ url_for('login') }}"><button class="nav-button-login">LOGIN</button></a>
          {% endif %}
@@ -20,9 +21,9 @@
 </header>
 <body>
         {% if project %}
-            <form action="{{ url_for('edit_project', project_id=project.id) }}" method="post">
+            <form class="create-form" action="{{ url_for('edit_project', project_id=project.id) }}" method="post">
         {% else %}
-            <form action="new-projects" method="post">
+            <form class="create-form" action="new-projects" method="post">
         {% endif %}
                 <p><label>Project Name</label></p>
                 <p><input type="text" name="project-name" value="{% if project %}{{project.projName}} {% endif %}"/></p>
@@ -38,9 +39,9 @@
                 </p>
                 <p>
                     {% if project %}
-                        <input type="submit" value="Update Project"/>
+                        <input class="add-update-button"  type="submit" value="Update Project"/>
                     {% else %}
-                        <input type="submit" value="Add Project"/>
+                        <input class="add-update-button" type="submit" value="Add Project"/>
                     {% endif %}
                 </p>
         </form>

@@ -185,3 +185,11 @@ def delete_project(project_id):
 def share_project(project_id):
     return redirect(url_for('index'))
 
+@app.route('/profile')
+def profile():
+    if session.get('user'):
+        projects = db.session.query(Project).filter_by(user_id=session['user_id']).all()
+        return render_template('profile.html', user=session['user'], projects=projects)
+    else:
+        return redirect(url_for('login'))
+

@@ -20,32 +20,24 @@
     </nav>
 </header>
 <body>
-    <h1>Welcome {% if user %}{{user}}{% endif %} to the T-Web Project Manager! </h1>
-    <table class="centered-content">
+    <h1>{% if user %}{{user}}'s{% endif %} User Profile</h1>
+    <table class="centered-content-profile">
+        <p class="centered-content-main">Current open projects:</p>
         {% if projects %}
             <tr>
                 <th class="heading1">Project Name</th>
-                <th class="heading1">Description</th>
                 <th class="heading1">Date Created</th>
                 <th class="heading1">Date Due</th>
             </tr>
-            {% for project in projects %}
+        {% for project in projects %}
             <tr>
                 <td><a href=" {{url_for('view_project', project_id=project.id) }} ">{{ project.projName }}</a></td>
-                <td>{{ project.projDesc }}</td>
                 <td>{{ project.createDate }}</td>
                 <td>{{ project.dueDate }}</td>
-                <td><a href="{{ url_for('edit_project', project_id=project.id) }}"><button class="edit-button">Edit</button></a></td>
-                <td>
-                    <form action = "{{ url_for('delete_project', project_id=project.id) }}" method="post">
-                        <input type="submit" value="Delete Project" class="delete-button">
-                    </form>
-                </td>
             </tr>
-            {% endfor %}
+        {% endfor %}
         {% else %}
             <h1>You do not have any current projects, navigate to the CREATE tab to get started.</h1>
         {% endif %}
-    </table>
 </body>
 </html>
