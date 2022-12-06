@@ -22,7 +22,10 @@
 <body>
     <div class="centered-content-main">
         <img src="{{ url_for('static', filename='logo1.png') }}" alt="logo1" id="logo-1"> <br>
+        {% if user %}
+        {% else %}
         <a href="./login"><button class="login-button">REGISTER/LOGIN</button></a> <br>
+        {% endif %}
         <hr>
         <img src="{{ url_for('static', filename='about-title.png') }}" alt="about" id="about-title"> <br>
         <p>T-Web is an easy-to-use, modern and efficient solution for team-based project management.</p>
