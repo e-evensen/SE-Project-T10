@@ -189,7 +189,28 @@ def share_project(project_id):
 def profile():
     if session.get('user'):
         projects = db.session.query(Project).filter_by(user_id=session['user_id']).all()
-        return render_template('profile.html', user=session['user'], projects=projects)
+        user = db.session.query(User).filter_by(id=session['user_id']).one()
+        return render_template('profile.html', projects=projects, user=user)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/profile/edit/<user_id>', methods=['GET', 'POST'])
+def edit_username(user_id):
+    if session.get('user'):
+        if request.method == 'POST':
+            firstName = request.form['first_name']
+            lastName = request.form['last_name']
+            user = db.session.query(User).filter_by(id=user_id).one()
+            user.first_name = firstName
+            user.last_name = lastName
+            db.session.add(user)
+            db.session.commit()
+
+            return redirect(url_for('profile'))
+
+        else:
+            project = db.session.query(Project).filter_by(id=id).one()
+            return render_template('new-projects.html', user=session['user'], project=project)
     else:
         return redirect(url_for('login'))
 
