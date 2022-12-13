@@ -110,7 +110,7 @@ input[type=submit] {
 .centered-content-detail {
     text-align: center;
     float: center;
-    margin-left: 40%;
+    margin-left: 35%;
 }
 .centered-content-comments {
     text-align: center;
@@ -121,6 +121,14 @@ input[type=submit] {
     float: center;
     margin-left: 35%;
 }
+centered-content-main-buttons {
+    padding-left: 50%;
+}
+centered-content-main-buttons:hover {
+    background-color: white;
+    color: black;
+}
+
 
 button:hover {
     background-color: white;
