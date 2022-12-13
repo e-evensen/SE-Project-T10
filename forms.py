@@ -55,6 +55,38 @@ class CommentForm(FlaskForm):
     class Meta:
         csrf = False
 
-    comment = TextAreaField('Comment',validators=[Length(min=1)])
+    comment = TextAreaField('Comment', validators=[Length(min=1)])
 
     submit = SubmitField('Add Comment')
+
+
+class ChangePasswordForm(FlaskForm):
+    class Meta:
+        csrf = False
+
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=6, max=10)])
+    submit = SubmitField('Submit')
+
+
+class ChangeNameForm(FlaskForm):
+    class Meta:
+        csrf = False
+
+    firstname = StringField('First Name', validators=[Length(1, 10)])
+    lastname = StringField('Last Name', validators=[Length(1, 20)])
+    submit = SubmitField('Submit')
+
+
+class ChangeEmailForm(FlaskForm):
+    class Meta:
+        csrf = False
+
+    email = StringField('Email', [
+        Email(message='Not a valid email address.'),
+        DataRequired()])
+
+    submit = SubmitField('Submit')
+
+    def validate_email(self, field):
+        if db.session.query(User).filter_by(email=field.data).count() != 0:
+            raise ValidationError('Email already in use.')
