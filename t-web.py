@@ -1,19 +1,24 @@
+import os
+
 from flask import Flask
 from flask import render_template
 from flask import request
 from flask import redirect
 from flask import url_for
 from flask import session
+from flask import flash
 from forms import LoginForm
 from forms import RegisterForm
 from forms import CommentForm
+from forms import ChangePasswordForm
+from forms import ChangeNameForm
+from forms import ChangeEmailForm
 from datetime import datetime
 from datetime import timedelta
 from database import db
 from models import Project as Project
 from models import User as User
 from models import Comment as Comment
-
 import bcrypt
 
 # from models import Project as Project
@@ -181,9 +186,11 @@ def delete_project(project_id):
     else:
         return redirect(url_for('login'))
 
+
 @app.route('/my-projects/share/<project_id>', methods=['POST'])
 def share_project(project_id):
     return redirect(url_for('index'))
+
 
 @app.route('/profile')
 def profile():
@@ -193,6 +200,7 @@ def profile():
         return render_template('profile.html', projects=projects, user=user)
     else:
         return redirect(url_for('login'))
+
 
 @app.route('/profile/edit/<user_id>', methods=['GET', 'POST'])
 def edit_username(user_id):
@@ -214,3 +222,61 @@ def edit_username(user_id):
     else:
         return redirect(url_for('login'))
 
+
+@app.route('/profile/name_change', methods=['GET', 'POST'])
+def edit_username():
+    if session.get('user'):
+        projects = db.session.query(Project).filter_by(user_id=session['user_id']).all()
+        user = db.session.query(User).filter_by(id=session['user_id']).one()
+        form = ChangeNameForm()
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                user.first_name = form.firstname.data
+                user.last_name = form.lastname.data
+                db.session.add(user)
+                db.session.commit()
+                flash('Username has been updated!')
+                return redirect(url_for('profile'))
+        else:
+            return render_template('name_change.html', form=form, projects=projects, user=user)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/profile/password_change', methods=["GET", "POST"])
+def user_password_change():
+    if session.get('user'):
+        projects = db.session.query(Project).filter_by(user_id=session['user_id']).all()
+        user = db.session.query(User).filter_by(id=session['user_id']).one()
+        form = ChangePasswordForm()
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                h_password = bcrypt.hashpw(
+                    form.password.data.encode('utf-8'), bcrypt.gensalt())
+                user.password = h_password
+                db.session.add(user)
+                db.session.commit()
+                flash('Password has been updated!')
+                return redirect(url_for('profile'))
+        else:
+            return render_template('password_change.html', form=form, projects=projects, user=user)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/profile/email_change', methods=['GET', 'POST'])
+def user_email_change():
+    if session.get('user'):
+        projects = db.session.query(Project).filter_by(user_id=session['user_id']).all()
+        user = db.session.query(User).filter_by(id=session['user_id']).one()
+        form = ChangeEmailForm()
+        if request.method == 'POST' and form.validate_on_submit():
+            user.email = form.email.data
+            db.session.add(user)
+            db.session.commit()
+            flash('Email has been updated!')
+            return redirect(url_for('profile'))
+        else:
+            return render_template('email_change.html', form=form, projects=projects, user=user)
+    else:
+        return redirect(url_for('login'))
