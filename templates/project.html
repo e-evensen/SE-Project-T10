@@ -9,7 +9,7 @@
 <header>
      <nav>
          <a href="{{ url_for('index') }}"><button class="nav-button-logo"><img src="{{ url_for('static', filename='logo3.png') }}" alt="logo3" id="logo-3"></button></a>
-         <a href="{{ url_for('list_projects') }}"><button class="nav-button">MY PROJECTS</button></a>
+         <a href="{{ url_for('list_projects') }}"><button class="nav-button" id="current-page">MY PROJECTS</button></a>
          <a href="{{ url_for('create_project') }}"><button class="nav-button">CREATE</button></a>
          {% if user %}
          <a href="{{ url_for('logout') }}"><button class="nav-button-login">LOGOUT</button></a>
