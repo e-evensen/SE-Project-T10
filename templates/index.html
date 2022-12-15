@@ -11,14 +11,22 @@
          <a href="{{ url_for('index') }}"><button class="nav-button-logo" id="current-page-1"><img src="{{ url_for('static', filename='logo3.png') }}" alt="logo3" id="logo-3"></button></a>
          <a href="{{ url_for('list_projects') }}"><button class="nav-button">MY PROJECTS</button></a>
          <a href="{{ url_for('create_project') }}"><button class="nav-button">CREATE</button></a>
+         {% if user %}
+         <a href="{{ url_for('logout') }}"><button class="nav-button-login">LOGOUT</button></a>
+         <a href="{{ url_for('profile') }}"><button class="nav-button-login">PROFILE</button></a>
+         {% else %}
          <a href="{{ url_for('login') }}"><button class="nav-button-login">LOGIN</button></a>
+         {% endif %}
     </nav>
 </header>
 <body>
-    <div class="centered-content">
+    <div class="centered-content-main">
         <img src="{{ url_for('static', filename='logo1.png') }}" alt="logo1" id="logo-1"> <br>
+        {% if user %}
+        {% else %}
         <a href="./login"><button class="login-button">REGISTER/LOGIN</button></a> <br>
-        <hr>
+        {% endif %}
+        <hr class="index-hr">
         <img src="{{ url_for('static', filename='about-title.png') }}" alt="about" id="about-title"> <br>
         <p>T-Web is an easy-to-use, modern and efficient solution for team-based project management.</p>
     </div>

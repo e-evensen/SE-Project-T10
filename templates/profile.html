@@ -9,44 +9,42 @@
 <header>
      <nav>
          <a href="{{ url_for('index') }}"><button class="nav-button-logo"><img src="{{ url_for('static', filename='logo3.png') }}" alt="logo3" id="logo-3"></button></a>
-         <a href="{{ url_for('list_projects') }}"><button class="nav-button" id="current-page">MY PROJECTS</button></a>
+         <a href="{{ url_for('list_projects') }}"><button class="nav-button">MY PROJECTS</button></a>
          <a href="{{ url_for('create_project') }}"><button class="nav-button">CREATE</button></a>
          {% if user %}
          <a href="{{ url_for('logout') }}"><button class="nav-button-login">LOGOUT</button></a>
-         <a href="{{ url_for('profile') }}"><button class="nav-button-login">PROFILE</button></a>
+         <a href="{{ url_for('profile') }}"><button class="nav-button-login" id="current-page">PROFILE</button></a>
          {% else %}
          <a href="{{ url_for('login') }}"><button class="nav-button-login">LOGIN</button></a>
          {% endif %}
     </nav>
 </header>
 <body>
-    <h1>Welcome {% if user %}{{user.first_name}}{% endif %} to the T-Web Project Manager! </h1>
-    <hr class="profile-hr">
-    <table class="centered-content">
+    <h1>{% if user %}{{user.first_name}}'s{% endif %} User Profile</h1>
+    <div class="centered-content-main">
+        <a href="{{ url_for('edit_username', user_id=user.id) }}"><button class="edit-button">Edit Username</button></a>
+        <a href="{{ url_for('user_email_change', user_id=user.id) }}"><button class="edit-button">Update Email Address</button></a>
+        <a href="{{ url_for('user_password_change', user_id=user.id) }}"><button class="edit-button">Change Password</button></a>
+    </div>
+    <table class="centered-content-profile">
+        <p class="centered-content-main">Email: {% if user %}{{user.email}}{% endif %}</p>
+        <hr class="profile-hr">
+        <p class="centered-content-main">Current open projects:</p>
         {% if projects %}
             <tr>
                 <th class="heading1">Project Name</th>
-                <th class="heading1">Description</th>
                 <th class="heading1">Date Created</th>
                 <th class="heading1">Date Due</th>
             </tr>
-            {% for project in projects %}
+        {% for project in projects %}
             <tr>
                 <td><a href=" {{url_for('view_project', project_id=project.id) }} ">{{ project.projName }}</a></td>
-                <td>{{ project.projDesc }}</td>
                 <td>{{ project.createDate }}</td>
                 <td>{{ project.dueDate }}</td>
-                <td><a href="{{ url_for('edit_project', project_id=project.id) }}"><button class="edit-button">Edit</button></a></td>
-                <td>
-                    <form action = "{{ url_for('delete_project', project_id=project.id) }}" method="post">
-                        <input type="submit" value="Delete Project" class="delete-button">
-                    </form>
-                </td>
             </tr>
-            {% endfor %}
+        {% endfor %}
         {% else %}
             <h1>You do not have any current projects, navigate to the CREATE tab to get started.</h1>
         {% endif %}
-    </table>
 </body>
 </html>

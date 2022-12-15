@@ -9,20 +9,25 @@
 <header>
      <nav>
          <a href="{{ url_for('index') }}"><button class="nav-button-logo"><img src="{{ url_for('static', filename='logo3.png') }}" alt="logo3" id="logo-3"></button></a>
-         <a href="{{ url_for('list_projects') }}"><button class="nav-button">MY PROJECTS</button></a>
+         <a href="{{ url_for('list_projects') }}"><button class="nav-button" id="current-page">MY PROJECTS</button></a>
          <a href="{{ url_for('create_project') }}"><button class="nav-button">CREATE</button></a>
+         {% if user %}
+         <a href="{{ url_for('logout') }}"><button class="nav-button-login">LOGOUT</button></a>
+         <a href="{{ url_for('profile') }}"><button class="nav-button-login">PROFILE</button></a>
+         {% else %}
          <a href="{{ url_for('login') }}"><button class="nav-button-login">LOGIN</button></a>
+         {% endif %}
     </nav>
 </header>
 <body>
     <h1>Project Details</h1>
 
-        <table>
+        <table class="centered-content-detail">
             <tr>
-                <th>Project Name</th>
-                <th>Description</th>
-                <th>Date Created</th>
-                <th>Date Due</th>
+                <th class="heading1-alt">Project Name</th>
+                <th class="heading1-alt">Description</th>
+                <th class="heading1-alt">Date Created</th>
+                <th class="heading1-alt">Date Due</th>
             </tr>
             <tr>
                 <td>{{ project.projName }}</td>
@@ -31,5 +36,27 @@
                 <td>{{ project.dueDate }}</td>
             </tr>
         </table>
+        {% if project.comments %}
+        {% if project.comments|length > 0 %}
+    <div class="centered-content-main">
+          <h2>Comments</h2>
+          <ul>
+          {% for comment in project.comments %}
+            <li>{{ comment.content }} 
+            posted on {{comment.date_posted}} by <a href="{{ url_for('profile') }}"><button class="edit-button">{{comment.user_name}}</button></a></li>
+          {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      {% endif %}
+      <form class="centered-content-comments" action="{{ url_for('new_comment', project_id=project.id) }}" method="post">
+        <div class="formwrapper">
+          <h2 class="title">Add a comment</h2>
+          <div class="form-field">
+            {{ form.comment.label }} <br/> {{ form.comment }}
+          </div>
+          <button type="submit" class="edit-button">Submit</button>
+        </div>
+      </form>
 </body>
 </html>

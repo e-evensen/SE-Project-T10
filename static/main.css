@@ -70,6 +70,18 @@ h2 {
     width: 200px;
 }
 
+/*
+input[type=submit] {
+    background-color: #030BFA;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    width: 200px;
+    padding
+}
+*/
+
 #login-prompt, #register-prompt {
     color: #030BFA;
     font-size: 25px;
@@ -86,11 +98,37 @@ h2 {
     width: 250px;
     margin-bottom: 15px;
 }
-
-.centered-content {
+.centered-content-main {
     text-align: center;
     float: center;
 }
+.centered-content-profile {
+    text-align: center;
+    float: center;
+    margin-left: 42%;
+}
+.centered-content-detail {
+    text-align: center;
+    float: center;
+    margin-left: 35%;
+}
+.centered-content-comments {
+    text-align: center;
+    float: center;
+}
+.centered-content {
+    text-align: center;
+    float: center;
+    margin-left: 35%;
+}
+centered-content-main-buttons {
+    padding-left: 50%;
+}
+centered-content-main-buttons:hover {
+    background-color: white;
+    color: black;
+}
+
 
 button:hover {
     background-color: white;
@@ -118,7 +156,16 @@ button:hover {
     margin-bottom: 30px;
 }
 
-hr {
+.profile-hr {
+    background-color: #030BFA;
+    height: 2.5px;
+    width: 1600px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.index-hr {
     background-color: #030BFA;
     height: 2.5px;
     width: 1600px;
@@ -138,12 +185,54 @@ p {
     color: white;
     border-radius: 20px;
     box-shadow: 5px black;
+    margin: 10px;
+    padding: 5px;
 }
 .delete-button:hover {
     background-color: white;
     color: black;
 }
-
 .edit-button {
-
+    background-color: #030BFA;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    box-shadow: 5px black;
+    margin: 10px;
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.edit-button:hover {
+    background-color: white;
+    color: black;
+}
+.add-update-button {
+    background-color: #030BFA;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    box-shadow: 5px black;
+    margin: 10px;
+    padding: 5px;
+    margin-left: 35px;
+}
+.add-update-button:hover {
+    background-color: white;
+    color: black;
+}
+.heading1 {
+    text-align: center;
+    margin: 30px;
+    color: #030BFA;
+}
+.heading1-alt {
+    text-align: center;
+    margin: 40px;
+    color: #030BFA;
+}
+.create-form {
+    margin: auto;
+    width: 12%;
+    padding: 10px;
 }
